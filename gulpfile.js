@@ -41,15 +41,15 @@ gulp.task('vendorCSS', function(){
 });
 
 gulp.task('copy-index', function() {
-    gulp.src('./app/index.html')    
+    gulp.src('./app/index.html')
         .pipe(gulp.dest('./build'));
 });
 
 gulp.task('watch',function(){
     gulp.watch([
-        'build/**/*.html',        
+        'build/**/*.html',
         'build/**/*.js',
-        'build/**/*.css'        
+        'build/**/*.css'
     ], function(event) {
         return gulp.src(event.path)
             .pipe(plugins.connect.reload());
