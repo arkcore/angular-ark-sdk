@@ -1,0 +1,23 @@
+{
+  "name": "angular-ark-sdk",
+  "main": "app.js",
+  "version": "0.0.0",
+  "authors": [
+    "Vitaly Aminev <vitaly@ark.com>"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "devDependencies": {
+    "angular": "~1.2.14"
+  },
+  "dependencies": {
+    "lodash": "~2.4.1"
+  }
+}
