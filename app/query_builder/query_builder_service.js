@@ -12,6 +12,20 @@ angular.module('angular-ark-sdk')
 
             var queryBuilder = {
 
+                idQuery: function (id) {
+                    return {
+                        type: "id",
+                        data: { id: id }
+                    };
+                },
+
+                allQuery: function (text) {
+                    return {
+                        type: "_all",
+                        data: { text: text }
+                    };
+                },
+
                 emailQuery: function (email) {
                     return {
                         type: "email",
