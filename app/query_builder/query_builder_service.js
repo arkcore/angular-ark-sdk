@@ -9,6 +9,15 @@ angular.module('angular-ark-sdk')
         function (ArkAvailableNetworks) {
 
             var _sexValues = ["male", "female", "other"];
+            var _suggestAllowedFields = [
+                'fullName',
+                'header',
+                'languages',
+                'education.degree',
+                'education.school',
+                'experience.company',
+                'experience.title'
+            ];
 
             var queryBuilder = {
 
@@ -138,6 +147,18 @@ angular.module('angular-ark-sdk')
                     });
 
                     return query;
+                },
+
+                suggestQuery: function (field, text) {
+                    if (_.indexOf(_suggestAllowedFields, field) === -1 ) {
+                        throw new Error("Suggest field must be one of the: " + _suggestAllowedFields.join(','));
+                    }
+
+                    var fieldName = field + ".completion";
+                    return {
+                        field: fieldName,
+                        text: text
+                    };
                 }
 
             };
