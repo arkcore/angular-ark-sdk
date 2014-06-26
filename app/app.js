@@ -1,30 +1,13 @@
 //
 // Copyright (c) 2014 by Ark.com. All Rights Reserved.
 // Created by Vitaly Aminev <v@aminev.me>
-// 
+//
 
-
-angular.module('angular-ark-sdk', [ 'Restangular' ])
-  .config([
-    "RestangularProvider",
-    "ArkAPIKey",
-    function (RestangularProvider, ArkAPIKey) {
-
-      RestangularProvider.setDefaultHeaders({"x-ark-token": ArkAPIKey});
-      RestangularProvider.setBaseUrl('https://ng.ark.com/api/1');
-
-      // If you need to disable caching - do it here
-      RestangularProvider.setDefaultHttpFields({cache: true});
-
-  }]);
-
-// In the production mode you have to specify API key here
-angular.module('angular-ark-sdk')
-  .value("ArkAPIKey", "your-ark-api-key");
-
-// list of available networks
-angular.module('angular-ark-sdk')
-  .constant("ArkAvailableNetworks", [
+angular.module('ArkSDK.config', [])
+  // In the production mode you have to specify API key here
+  .constant('ArkAPIKey', 'your-ark-api-key')
+  // list of available networks
+  .constant('ArkAvailableNetworks', [
     'angellist',
     'aboutme',
     'ark',
@@ -68,3 +51,18 @@ angular.module('angular-ark-sdk')
     'yelp',
     'youtube'
   ]);
+
+
+angular.module('ArkSDK', [ 'restangular', 'ArkSDK.config' ])
+  .config([
+    'RestangularProvider',
+    'ArkAPIKey',
+    function (RestangularProvider, ArkAPIKey) {
+
+      RestangularProvider.setDefaultHeaders({"x-ark-token": ArkAPIKey});
+      RestangularProvider.setBaseUrl('https://ng.ark.com/api/1');
+
+      // If you need to disable caching - do it here
+      RestangularProvider.setDefaultHttpFields({cache: true});
+
+  }]);
