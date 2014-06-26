@@ -67,7 +67,7 @@ gulp.task('watch',function(){
 gulp.task('connect', plugins.connect.server({
     root: ['build'],
     port: 9000,
-    livereload: true
+    livereload: false
 }));
 
 gulp.task('default',['connect','scripts','templates','css','copy-index','vendorJS','vendorCSS','watch']);

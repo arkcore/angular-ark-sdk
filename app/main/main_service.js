@@ -28,14 +28,14 @@ angular.module('ArkSDK')
                     var query = { query: commands };
                     page = page || 0;
 
-                    return Restangular.post("search", query, { page: page })
+                    return Restangular.all("search").post(query, { page: page })
                         .then(this._extractResponse(false), this._handleError);
                 },
 
                 suggest: function (field, text) {
-                    var query = ArkQueryBuilder.suggest(field, text);
+                    var query = ArkQueryBuilder.suggestQuery(field, text);
 
-                    return Restangular.post("search/suggest", query)
+                    return Restangular.all("search/suggest").post(query)
                         .then(function extractSuggest(data) {
                             // do any transformations if need be
                             return data;
