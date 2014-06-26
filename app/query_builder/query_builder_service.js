@@ -3,9 +3,9 @@
 // Created by Vitaly Aminev <v@aminev.me>
 //
 
-angular.module('angular-ark-sdk')
-    .factory('ArkApi', [
-        "ArkAvailableNetworks",
+angular.module('ArkSDK')
+    .factory('ArkQueryBuilder', [
+        'ArkAvailableNetworks',
         function (ArkAvailableNetworks) {
 
             var _sexValues = ["male", "female", "other"];

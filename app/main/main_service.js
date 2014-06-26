@@ -3,12 +3,12 @@
 // Created by Vitaly Aminev <v@aminev.me>
 //
 
-angular.module('angular-ark-sdk')
+angular.module('ArkSDK')
     .factory('ArkApi', [
-        "Restangular",
-        "$q",
-        "ArkAvailableNetworks",
-        "ArkQueryBuilder",
+        'Restangular',
+        '$q',
+        'ArkAvailableNetworks',
+        'ArkQueryBuilder',
         function (Restangular, $q, ArkAvailableNetworks, ArkQueryBuilder) {
 
             var service = {
