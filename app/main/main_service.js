@@ -35,7 +35,7 @@ angular.module('ArkSDK')
                 suggest: function (field, text) {
                     var query = ArkQueryBuilder.suggestQuery(field, text);
 
-                    return Restangular.all("search/suggest").post(query)
+                    return Restangular.all("suggest").post(query)
                         .then(function extractSuggest(data) {
                             // do any transformations if need be
                             return data;
