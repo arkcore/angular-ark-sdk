@@ -56,19 +56,27 @@ angular.module('ArkSDK.config', [])
   ]);
 
 
-angular.module('ArkSDK', [ 'restangular', 'ArkSDK.config' ])
-  .config([
-    'RestangularProvider',
+angular.module('ArkSDK', [
+    'restangular',
+    'ArkSDK.config'
+  ]);
+
+// Restangular service that uses Bing
+angular.module('ArkSDK')
+  .factory('ArkRestangular', [
+    'Restangular',
     'ArkAPIKey',
-    function (RestangularProvider, ArkAPIKey) {
+    function (Restangular, ArkAPIKey) {
+      return Restangular.withConfig(function(RestangularConfigurer) {
 
-      RestangularProvider.setDefaultHeaders({"x-ark-token": ArkAPIKey});
-      RestangularProvider.setBaseUrl('https://ng.ark.com/api/1');
+        RestangularConfigurer.setDefaultHeaders({"x-ark-token": ArkAPIKey});
+        RestangularConfigurer.setBaseUrl('https://ng.ark.com/api/1');
 
-      // If you need to disable caching - do it here
-      RestangularProvider.setDefaultHttpFields({cache: true});
-
-  }]);
+        // If you need to disable caching - do it here
+        RestangularConfigurer.setDefaultHttpFields({cache: true});
+      });
+    }
+  ]);
 
 //
 // Copyright (c) 2014 by Ark.com. All Rights Reserved.
@@ -77,7 +85,7 @@ angular.module('ArkSDK', [ 'restangular', 'ArkSDK.config' ])
 
 angular.module('ArkSDK')
     .factory('ArkApi', [
-        'Restangular',
+        'ArkRestangular',
         '$q',
         'ArkAvailableNetworks',
         'ArkQueryBuilder',

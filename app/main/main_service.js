@@ -5,7 +5,7 @@
 
 angular.module('ArkSDK')
     .factory('ArkApi', [
-        'Restangular',
+        'ArkRestangular',
         '$q',
         'ArkAvailableNetworks',
         'ArkQueryBuilder',
