@@ -23,19 +23,25 @@ angular.module('ArkSDK')
                     return this.search(query, page);
                 },
 
-                search: function (commands, page) {
+                search: function (commands, page, config) {
                     // TODO: add mode support
                     var query = { query: commands };
                     page = page || 0;
+                    config = config || {};
 
-                    return Restangular.all("search").post(query, { page: page })
+                    return Restangular.all("search")
+                        .withHttpConfig(config)
+                        .post(query, { page: page })
                         .then(this._extractResponse(false), this._handleError);
                 },
 
-                suggest: function (field, text) {
+                suggest: function (field, text, config) {
                     var query = ArkQueryBuilder.suggestQuery(field, text);
+                    config = config || {};
 
-                    return Restangular.all("search/suggest").post(query)
+                    return Restangular.all("suggest")
+                        .withHttpConfig(config)
+                        .post(query)
                         .then(function extractSuggest(data) {
                             // do any transformations if need be
                             return data;

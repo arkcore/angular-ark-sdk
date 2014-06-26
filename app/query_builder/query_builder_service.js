@@ -18,6 +18,7 @@ angular.module('ArkSDK')
                 'experience.company',
                 'experience.title'
             ];
+            var _networks = _.values(ArkAvailableNetworks);
 
             var queryBuilder = {
 
@@ -43,7 +44,7 @@ angular.module('ArkSDK')
                 },
 
                 networkAndIdQuery: function (network, id) {
-                    if (_.indexOf(ArkAvailableNetworks, network) === -1) {
+                    if (_.indexOf(_networks, network) === -1) {
                         throw new Error(network + " is not in the list of available networks");
                     }
 
