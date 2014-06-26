@@ -32,6 +32,16 @@ angular.module('angular-ark-sdk')
                         .then(this._extractResponse(false), this._handleError);
                 },
 
+                suggest: function (field, text) {
+                    var query = ArkQueryBuilder.suggest(field, text);
+
+                    return Restangular.post("search/suggest", query)
+                        .then(function extractSuggest(data) {
+                            // do any transformations if need be
+                            return data;
+                        }, this._handleError);
+                },
+
                 // extracts response out of the meta information
                 _extractResponse: function (single) {
                     signle = single || false;

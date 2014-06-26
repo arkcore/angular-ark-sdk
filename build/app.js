@@ -106,6 +106,16 @@ angular.module('angular-ark-sdk')
                         .then(this._extractResponse(false), this._handleError);
                 },
 
+                suggest: function (field, text) {
+                    var query = ArkQueryBuilder.suggest(field, text);
+
+                    return Restangular.post("search/suggest", query)
+                        .then(function extractSuggest(data) {
+                            // do any transformations if need be
+                            return data;
+                        }, this._handleError);
+                },
+
                 // extracts response out of the meta information
                 _extractResponse: function (single) {
                     signle = single || false;
@@ -142,6 +152,15 @@ angular.module('angular-ark-sdk')
         function (ArkAvailableNetworks) {
 
             var _sexValues = ["male", "female", "other"];
+            var _suggestAllowedFields = [
+                'fullName',
+                'header',
+                'languages',
+                'education.degree',
+                'education.school',
+                'experience.company',
+                'experience.title'
+            ];
 
             var queryBuilder = {
 
@@ -271,6 +290,18 @@ angular.module('angular-ark-sdk')
                     });
 
                     return query;
+                },
+
+                suggestQuery: function (field, text) {
+                    if (_.indexOf(_suggestAllowedFields, field) === -1 ) {
+                        throw new Error("Suggest field must be one of the: " + _suggestAllowedFields.join(','));
+                    }
+
+                    var fieldName = field + ".completion";
+                    return {
+                        field: fieldName,
+                        text: text
+                    };
                 }
 
             };
