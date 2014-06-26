@@ -56,19 +56,27 @@ angular.module('ArkSDK.config', [])
   ]);
 
 
-angular.module('ArkSDK', [ 'restangular', 'ArkSDK.config' ])
-  .config([
-    'RestangularProvider',
+angular.module('ArkSDK', [
+    'restangular',
+    'ArkSDK.config'
+  ]);
+
+// Restangular service that uses Bing
+angular.module('ArkSDK')
+  .factory('ArkRestangular', [
+    'Restangular',
     'ArkAPIKey',
-    function (RestangularProvider, ArkAPIKey) {
+    function (Restangular, ArkAPIKey) {
+      return Restangular.withConfig(function(RestangularConfigurer) {
 
-      RestangularProvider.setDefaultHeaders({"x-ark-token": ArkAPIKey});
-      RestangularProvider.setBaseUrl('https://ng.ark.com/api/1');
+        RestangularConfigurer.setDefaultHeaders({"x-ark-token": ArkAPIKey});
+        RestangularConfigurer.setBaseUrl('https://ng.ark.com/api/1');
 
-      // If you need to disable caching - do it here
-      RestangularProvider.setDefaultHttpFields({cache: true});
-
-  }]);
+        // If you need to disable caching - do it here
+        RestangularConfigurer.setDefaultHttpFields({cache: true});
+      });
+    }
+  ]);
 
 //
 // Copyright (c) 2014 by Ark.com. All Rights Reserved.
@@ -77,7 +85,7 @@ angular.module('ArkSDK', [ 'restangular', 'ArkSDK.config' ])
 
 angular.module('ArkSDK')
     .factory('ArkApi', [
-        'Restangular',
+        'ArkRestangular',
         '$q',
         'ArkAvailableNetworks',
         'ArkQueryBuilder',
@@ -100,14 +108,14 @@ angular.module('ArkSDK')
                     var query = { query: commands };
                     page = page || 0;
 
-                    return Restangular.post("search", query, { page: page })
+                    return Restangular.all("search").post(query, { page: page })
                         .then(this._extractResponse(false), this._handleError);
                 },
 
                 suggest: function (field, text) {
-                    var query = ArkQueryBuilder.suggest(field, text);
+                    var query = ArkQueryBuilder.suggestQuery(field, text);
 
-                    return Restangular.post("search/suggest", query)
+                    return Restangular.all("search/suggest").post(query)
                         .then(function extractSuggest(data) {
                             // do any transformations if need be
                             return data;
