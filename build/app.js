@@ -8,52 +8,50 @@
 
 angular.module('ArkSDK.config', [])
   // In the production mode you have to specify API key here
-  .constant('ArkAPIKey', 'your-ark-api-key')
+  .value('ArkAPIKey', 'your-ark-api-key')
   // list of available networks
-  .constant('ArkAvailableNetworks', [
-    'angellist',
-    'aboutme',
-    'ark',
-    'behance',
-    'blogger',
-    'care2',
-    'crunchbase',
-    'deviantart',
-    'dribbble',
-    'emailcrawler',
-    'facebook',
-    'flavorsme',
-    'flickr',
-    'foursquare',
-    'github',
-    'googleplus',
-    'hackernews',
-    'instagram',
-    'keek',
-    'klout',
-    'lastfm',
-    'linkedin',
-    'meetup',
-    'newsle',
-    'pinterest',
-    '500px',
-    'quora',
-    'soundcloud',
-    'stackoverflow',
-    'spotify',
-    'sprashivairu',
-    'svpply',
-    'tumblr',
-    'twitter',
-    'vk',
-    'vimeo',
-    'wanelo',
-    'wordpress',
-    'xing',
-    'yaru',
-    'yelp',
-    'youtube'
-  ]);
+  .constant('ArkAvailableNetworks', {
+    'AngelList': 'angellist',
+    'About.me': 'aboutme',
+    'Behance': 'behance',
+    'Blogger': 'blogger',
+    'Care2.com': 'care2',
+    'Cruncbase': 'crunchbase',
+    'deviantART': 'deviantart',
+    'Dribbble': 'dribbble',
+    'Facebook': 'facebook',
+    'Flavors.me': 'flavorsme',
+    'Flickr': 'flickr',
+    'FourSquare': 'foursquare',
+    'GitHub': 'github',
+    'Google+': 'googleplus',
+    'Hacker News': 'hackernews',
+    'Instagram': 'instagram',
+    'Keek': 'keek',
+    'Klout': 'klout',
+    'Last.fm': 'lastfm',
+    'LinkedIn': 'linkedin',
+    'Meetup': 'meetup',
+    'Newsle': 'newsle',
+    'Pinterest': 'pinterest',
+    '500px.com': '500px',
+    'Quora': 'quora',
+    'SoundCloud': 'soundcloud',
+    'StackOverflow': 'stackoverflow',
+    'Spotify': 'spotify',
+    'Sprasivai.ru': 'sprashivairu',
+    'Svpply': 'svpply',
+    'Tumblr': 'tumblr',
+    'Twitter': 'twitter',
+    'VK': 'vk',
+    'Vimeo': 'vimeo',
+    'Wanelo': 'wanelo',
+    'WordPress': 'wordpress',
+    'Xing': 'xing',
+    'Ya.ru': 'yaru',
+    'Yelp': 'yelp',
+    'Youtube': 'youtube'
+  });
 
 
 angular.module('ArkSDK', [
@@ -84,6 +82,81 @@ angular.module('ArkSDK')
 //
 
 angular.module('ArkSDK')
+    .factory('ArkApi', [
+        'ArkRestangular',
+        '$q',
+        'ArkAvailableNetworks',
+        'ArkQueryBuilder',
+        function (Restangular, $q, ArkAvailableNetworks, ArkQueryBuilder) {
+
+            var service = {
+
+                findByEmail: function (email) {
+                    return Restangular.one("email", email).get()
+                        .then(this._extractResponse(true), this._handleError);
+                },
+
+                findByNetworkAndId: function (network, id, page) {
+                    var query = ArkQueryBuilder.networkAndIdQuery(network, id);
+                    return this.search(query, page);
+                },
+
+                search: function (commands, page, config) {
+                    // TODO: add mode support
+                    var query = { query: commands };
+                    page = page || 0;
+                    config = config || {};
+
+                    return Restangular.all("search")
+                        .withHttpConfig(config)
+                        .post(query, { page: page })
+                        .then(this._extractResponse(false), this._handleError);
+                },
+
+                suggest: function (field, text, config) {
+                    var query = ArkQueryBuilder.suggestQuery(field, text);
+                    config = config || {};
+
+                    return Restangular.all("suggest")
+                        .withHttpConfig(config)
+                        .post(query)
+                        .then(function extractSuggest(data) {
+                            // do any transformations if need be
+                            return data;
+                        }, this._handleError);
+                },
+
+                // extracts response out of the meta information
+                _extractResponse: function (single) {
+                    signle = single || false;
+                    return function (data) {
+                        if (single) {
+                            return data.results[0];
+                        } else {
+                            return { total: data.total, results: data.results };
+                        }
+                    };
+                },
+
+                _handleError: function () {
+                    // TODO: handle errors
+                    console.error(arguments);
+                }
+
+            };
+
+            _.bindAll(service);
+
+            return service;
+        }
+    ]);
+
+//
+// Copyright (c) 2014 by Ark.com. All Rights Reserved.
+// Created by Vitaly Aminev <v@aminev.me>
+//
+
+angular.module('ArkSDK')
     .factory('ArkQueryBuilder', [
         'ArkAvailableNetworks',
         function (ArkAvailableNetworks) {
@@ -98,6 +171,7 @@ angular.module('ArkSDK')
                 'experience.company',
                 'experience.title'
             ];
+            var _networks = _.values(ArkAvailableNetworks);
 
             var queryBuilder = {
 
@@ -123,7 +197,7 @@ angular.module('ArkSDK')
                 },
 
                 networkAndIdQuery: function (network, id) {
-                    if (_.indexOf(ArkAvailableNetworks, network) === -1) {
+                    if (_.indexOf(_networks, network) === -1) {
                         throw new Error(network + " is not in the list of available networks");
                     }
 
@@ -244,81 +318,6 @@ angular.module('ArkSDK')
             };
 
             return queryBuilder;
-        }
-    ]);
-
-//
-// Copyright (c) 2014 by Ark.com. All Rights Reserved.
-// Created by Vitaly Aminev <v@aminev.me>
-//
-
-angular.module('ArkSDK')
-    .factory('ArkApi', [
-        'ArkRestangular',
-        '$q',
-        'ArkAvailableNetworks',
-        'ArkQueryBuilder',
-        function (Restangular, $q, ArkAvailableNetworks, ArkQueryBuilder) {
-
-            var service = {
-
-                findByEmail: function (email) {
-                    return Restangular.one("email", email).get()
-                        .then(this._extractResponse(true), this._handleError);
-                },
-
-                findByNetworkAndId: function (network, id, page) {
-                    var query = ArkQueryBuilder.networkAndIdQuery(network, id);
-                    return this.search(query, page);
-                },
-
-                search: function (commands, page, config) {
-                    // TODO: add mode support
-                    var query = { query: commands };
-                    page = page || 0;
-                    config = config || {};
-
-                    return Restangular.all("search")
-                        .withHttpConfig(config)
-                        .post(query, { page: page })
-                        .then(this._extractResponse(false), this._handleError);
-                },
-
-                suggest: function (field, text, config) {
-                    var query = ArkQueryBuilder.suggestQuery(field, text);
-                    config = config || {};
-
-                    return Restangular.all("suggest")
-                        .withHttpConfig(config)
-                        .post(query)
-                        .then(function extractSuggest(data) {
-                            // do any transformations if need be
-                            return data;
-                        }, this._handleError);
-                },
-
-                // extracts response out of the meta information
-                _extractResponse: function (single) {
-                    signle = single || false;
-                    return function (data) {
-                        if (single) {
-                            return data.results[0];
-                        } else {
-                            return { total: data.total, results: data.results };
-                        }
-                    };
-                },
-
-                _handleError: function () {
-                    // TODO: handle errors
-                    console.error(arguments);
-                }
-
-            };
-
-            _.bindAll(service);
-
-            return service;
         }
     ]);
 
