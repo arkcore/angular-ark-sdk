@@ -44,7 +44,7 @@ angular.module('angular-ark-sdk')
 
                 // extracts response out of the meta information
                 _extractResponse: function (single) {
-                    signle = single || false;
+                    var single = single || false;
                     return function (data) {
                         if (single) {
                             return data.results[0];
