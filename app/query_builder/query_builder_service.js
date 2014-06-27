@@ -59,13 +59,23 @@ angular.module('ArkSDK')
                     return query;
                 },
 
-                placesQuery: function (place) {
-                    return {
+                placesQuery: function (place, type) {
+                    if (!place) {
+                        throw new Error('At least place has to be specified');
+                    }
+
+                    var query = {
                         type: "places",
                         data: {
                             place: place
                         }
                     };
+
+                    if (type) {
+                        query.data.type = type;
+                    }
+
+                    return query;
                 },
 
                 sexQuery: function (sex) {
