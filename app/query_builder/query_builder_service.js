@@ -3,9 +3,9 @@
 // Created by Vitaly Aminev <v@aminev.me>
 //
 
-angular.module('angular-ark-sdk')
-    .factory('ArkApi', [
-        "ArkAvailableNetworks",
+angular.module('ArkSDK')
+    .factory('ArkQueryBuilder', [
+        'ArkAvailableNetworks',
         function (ArkAvailableNetworks) {
 
             var _sexValues = ["male", "female", "other"];
@@ -18,6 +18,7 @@ angular.module('angular-ark-sdk')
                 'experience.company',
                 'experience.title'
             ];
+            var _networks = _.values(ArkAvailableNetworks);
 
             var queryBuilder = {
 
@@ -43,7 +44,7 @@ angular.module('angular-ark-sdk')
                 },
 
                 networkAndIdQuery: function (network, id) {
-                    if (_.indexOf(ArkAvailableNetworks, network) === -1) {
+                    if (_.indexOf(_networks, network) === -1) {
                         throw new Error(network + " is not in the list of available networks");
                     }
 

@@ -1,70 +1,74 @@
 //
 // Copyright (c) 2014 by Ark.com. All Rights Reserved.
 // Created by Vitaly Aminev <v@aminev.me>
-// 
+//
+
+angular.module('ArkSDK.config', [])
+  // In the production mode you have to specify API key here
+  .value('ArkAPIKey', 'your-ark-api-key')
+  // list of available networks
+  .constant('ArkAvailableNetworks', {
+    'AngelList': 'angellist',
+    'About.me': 'aboutme',
+    'Behance': 'behance',
+    'Blogger': 'blogger',
+    'Care2.com': 'care2',
+    'Cruncbase': 'crunchbase',
+    'deviantART': 'deviantart',
+    'Dribbble': 'dribbble',
+    'Facebook': 'facebook',
+    'Flavors.me': 'flavorsme',
+    'Flickr': 'flickr',
+    'FourSquare': 'foursquare',
+    'GitHub': 'github',
+    'Google+': 'googleplus',
+    'Hacker News': 'hackernews',
+    'Instagram': 'instagram',
+    'Keek': 'keek',
+    'Klout': 'klout',
+    'Last.fm': 'lastfm',
+    'LinkedIn': 'linkedin',
+    'Meetup': 'meetup',
+    'Newsle': 'newsle',
+    'Pinterest': 'pinterest',
+    '500px.com': '500px',
+    'Quora': 'quora',
+    'SoundCloud': 'soundcloud',
+    'StackOverflow': 'stackoverflow',
+    'Spotify': 'spotify',
+    'Sprasivai.ru': 'sprashivairu',
+    'Svpply': 'svpply',
+    'Tumblr': 'tumblr',
+    'Twitter': 'twitter',
+    'VK': 'vk',
+    'Vimeo': 'vimeo',
+    'Wanelo': 'wanelo',
+    'WordPress': 'wordpress',
+    'Xing': 'xing',
+    'Ya.ru': 'yaru',
+    'Yelp': 'yelp',
+    'Youtube': 'youtube'
+  });
 
 
-angular.module('angular-ark-sdk', [ 'Restangular' ])
-  .config([
-    "RestangularProvider",
-    "ArkAPIKey",
-    function (RestangularProvider, ArkAPIKey) {
+angular.module('ArkSDK', [
+    'restangular',
+    'ArkSDK.config'
+  ]);
 
-      RestangularProvider.setDefaultHeaders({"x-ark-token": ArkAPIKey});
-      RestangularProvider.setBaseUrl('https://ng.ark.com/api/1');
+// Restangular service that uses Bing
+angular.module('ArkSDK')
+  .factory('ArkRestangular', [
+    'Restangular',
+    'ArkAPIKey',
+    function (Restangular, ArkAPIKey) {
+      return Restangular.withConfig(function(RestangularConfigurer) {
 
-      // If you need to disable caching - do it here
-      RestangularProvider.setDefaultHttpFields({cache: true});
+        RestangularConfigurer.setDefaultHeaders({"x-ark-token": ArkAPIKey});
+        RestangularConfigurer.setBaseUrl('https://ng.ark.com/api/1');
 
-  }]);
-
-// In the production mode you have to specify API key here
-angular.module('angular-ark-sdk')
-  .value("ArkAPIKey", "your-ark-api-key");
-
-// list of available networks
-angular.module('angular-ark-sdk')
-  .constant("ArkAvailableNetworks", [
-    'angellist',
-    'aboutme',
-    'ark',
-    'behance',
-    'blogger',
-    'care2',
-    'crunchbase',
-    'deviantart',
-    'dribbble',
-    'emailcrawler',
-    'facebook',
-    'flavorsme',
-    'flickr',
-    'foursquare',
-    'github',
-    'googleplus',
-    'hackernews',
-    'instagram',
-    'keek',
-    'klout',
-    'lastfm',
-    'linkedin',
-    'meetup',
-    'newsle',
-    'pinterest',
-    '500px',
-    'quora',
-    'soundcloud',
-    'stackoverflow',
-    'spotify',
-    'sprashivairu',
-    'svpply',
-    'tumblr',
-    'twitter',
-    'vk',
-    'vimeo',
-    'wanelo',
-    'wordpress',
-    'xing',
-    'yaru',
-    'yelp',
-    'youtube'
+        // If you need to disable caching - do it here
+        RestangularConfigurer.setDefaultHttpFields({cache: true});
+      });
+    }
   ]);

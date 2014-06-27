@@ -3,12 +3,12 @@
 // Created by Vitaly Aminev <v@aminev.me>
 //
 
-angular.module('angular-ark-sdk')
+angular.module('ArkSDK')
     .factory('ArkApi', [
-        "Restangular",
-        "$q",
-        "ArkAvailableNetworks",
-        "ArkQueryBuilder",
+        'ArkRestangular',
+        '$q',
+        'ArkAvailableNetworks',
+        'ArkQueryBuilder',
         function (Restangular, $q, ArkAvailableNetworks, ArkQueryBuilder) {
 
             var service = {
@@ -23,19 +23,25 @@ angular.module('angular-ark-sdk')
                     return this.search(query, page);
                 },
 
-                search: function (commands, page) {
+                search: function (commands, page, config) {
                     // TODO: add mode support
                     var query = { query: commands };
                     page = page || 0;
+                    config = config || {};
 
-                    return Restangular.post("search", query, { page: page })
+                    return Restangular.all("search")
+                        .withHttpConfig(config)
+                        .post(query, { page: page })
                         .then(this._extractResponse(false), this._handleError);
                 },
 
-                suggest: function (field, text) {
-                    var query = ArkQueryBuilder.suggest(field, text);
+                suggest: function (field, text, config) {
+                    var query = ArkQueryBuilder.suggestQuery(field, text);
+                    config = config || {};
 
-                    return Restangular.post("search/suggest", query)
+                    return Restangular.all("suggest")
+                        .withHttpConfig(config)
+                        .post(query)
                         .then(function extractSuggest(data) {
                             // do any transformations if need be
                             return data;
