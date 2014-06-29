@@ -102,8 +102,7 @@ angular.module('ArkSDK')
                 },
 
                 findById: function(id) {
-                    return Restangular.one("search", id).get()
-                      .then(this._extractResponse(true), this._handleError);
+                    return Restangular.one("search", id).get();
                 },
 
                 search: function (commands, page, config) {
