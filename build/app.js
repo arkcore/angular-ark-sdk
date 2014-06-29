@@ -101,6 +101,11 @@ angular.module('ArkSDK')
                     return this.search(query, page);
                 },
 
+                findById: function(id) {
+                    return Restangular.one("search", id).get()
+                      .then(this._extractResponse(true), this._handleError);
+                },
+
                 search: function (commands, page, config) {
                     // TODO: add mode support
                     var query = { query: commands };
