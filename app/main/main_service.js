@@ -50,9 +50,8 @@ angular.module('ArkSDK')
 
                 // extracts response out of the meta information
                 _extractResponse: function (single) {
-                    var single = single || false;
                     return function (data) {
-                        if (single) {
+                        if (single === true) {
                             return data.results[0];
                         } else {
                             return { total: data.total, results: data.results };
