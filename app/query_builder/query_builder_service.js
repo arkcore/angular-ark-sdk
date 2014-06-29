@@ -146,8 +146,8 @@ angular.module('ArkSDK')
                 },
 
                 experienceQuery: function (company, title, start, end) {
-                    if (!school && !degree) {
-                        throw new Error("At least school or degree should be specified");
+                    if (!company && !title) {
+                        throw new Error("At least company or title should be specified");
                     }
                     var passedArgs = arguments.length;
                     var args = arguments;
