@@ -136,7 +136,7 @@ angular.module('ArkSDK')
                         if (single === true) {
                             return data.results[0];
                         } else {
-                            return { total: data.total, results: data.results };
+                            return data;
                         }
                     };
                 },
