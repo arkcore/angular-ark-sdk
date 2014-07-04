@@ -23,6 +23,10 @@ angular.module('ArkSDK')
                     return this.search(query, page);
                 },
 
+                findById: function(id) {
+                    return Restangular.one("search", id).get();
+                },
+
                 search: function (commands, page, config) {
                     // TODO: add mode support
                     var query = { query: commands };
@@ -50,12 +54,11 @@ angular.module('ArkSDK')
 
                 // extracts response out of the meta information
                 _extractResponse: function (single) {
-                    var single = single || false;
                     return function (data) {
-                        if (single) {
+                        if (single === true) {
                             return data.results[0];
                         } else {
-                            return { total: data.total, results: data.results };
+                            return data;
                         }
                     };
                 },
