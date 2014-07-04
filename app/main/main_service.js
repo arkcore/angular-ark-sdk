@@ -58,7 +58,7 @@ angular.module('ArkSDK')
                         if (single === true) {
                             return data.results[0];
                         } else {
-                            return data;
+                            return dapta;
                         }
                     };
                 },
