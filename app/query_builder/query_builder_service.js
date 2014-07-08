@@ -181,6 +181,28 @@ angular.module('ArkSDK')
                         field: fieldName,
                         text: text
                     };
+                },
+
+                suggestMultipleQuery: function (fields, text) {
+                    if (!_.isArray(fields)) {
+                        throw new Error("fields must be an Array");
+                    }
+
+                    var field;
+                    var fieldNames = [];
+                    for (var i = 0, l = fields.length; i < l; i++) {
+                        field = fields[i];
+                        if (_.indexOf(_suggestAllowedFields, field) === -1) {
+                            throw new Error("Suggest field must be one of the: " + _suggestAllowedFields.join(','));
+                        }
+                        fieldsNames.push(field + ".completion");
+                    }
+
+                    return {
+                        fields: fieldNames,
+                        text: text
+                    };
+
                 }
 
             };
