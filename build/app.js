@@ -124,7 +124,7 @@ angular.module('ArkSDK')
                     return Restangular.all("suggest")
                         .withHttpConfig(config)
                         .post(query)
-                        .tthen(function extractMultipleSuggest(data){
+                        .then(function extractMultipleSuggest(data){
                             // TODO: add appropriate transformations
                             return data;
                         }, this._handleError);
@@ -356,6 +356,7 @@ angular.module('ArkSDK')
                     if (!_.isArray(fields)) {
                         throw new Error("fields must be an Array");
                     }
+
                     var field;
                     var fieldNames = [];
                     for (var i = 0, l = fields.length; i < l; i++) {
