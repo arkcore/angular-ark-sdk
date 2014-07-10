@@ -46,7 +46,7 @@ angular.module('ArkSDK')
                     return Restangular.all("suggest")
                         .withHttpConfig(config)
                         .post(query)
-                        .tthen(function extractMultipleSuggest(data){
+                        .then(function extractMultipleSuggest(data){
                             // TODO: add appropriate transformations
                             return data;
                         }, this._handleError);
