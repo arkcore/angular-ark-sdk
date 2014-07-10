@@ -1,7 +1,7 @@
 {
   "name": "angular-ark-sdk",
   "main": "app.js",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "authors": [
     "Vitaly Aminev <vitaly@ark.com>"
   ],
