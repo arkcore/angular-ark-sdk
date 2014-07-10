@@ -363,7 +363,7 @@ angular.module('ArkSDK')
                         if (_.indexOf(_suggestAllowedFields, field) === -1) {
                             throw new Error("Suggest field must be one of the: " + _suggestAllowedFields.join(','));
                         }
-                        fieldsNames.push(field + ".completion");
+                        fieldNames.push(field + ".completion");
                     }
 
                     return {
