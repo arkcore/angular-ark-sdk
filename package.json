@@ -1,6 +1,6 @@
 {
   "name": "angular-ark-sdk",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "main": "app.js",
   "devDependencies": {
     "gulp": "~3.5.5",
