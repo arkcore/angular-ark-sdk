@@ -171,6 +171,16 @@ angular.module('ArkSDK')
                     return query;
                 },
 
+                interestsQuery: function (interests) {
+                    return {
+                        type: "interests",
+                        data: {
+                            type: "other",
+                            text: interests
+                        }
+                    };
+                },
+
                 suggestQuery: function (field, text) {
                     if (_.indexOf(_suggestAllowedFields, field) === -1 ) {
                         throw new Error("Suggest field must be one of the: " + _suggestAllowedFields.join(','));
