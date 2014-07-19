@@ -178,6 +178,7 @@ angular.module('ArkSDK')
         function (ArkAvailableNetworks) {
 
             var _sexValues = ["male", "female", "other"];
+            var _interestsTypes = ['books', 'film', 'games', 'movies', 'music', 'other'];
             var _suggestAllowedFields = [
                 'fullName',
                 'header',
@@ -340,12 +341,17 @@ angular.module('ArkSDK')
                     return query;
                 },
 
-                interestsQuery: function (interests) {
+                interestsQuery: function (type, text) {
+
+                    if (_interestsTypes.indexOf(type) === -1) {
+                        throw new Error(type + " is not supported interest type");
+                    }
+
                     return {
                         type: "interests",
                         data: {
-                            type: "other",
-                            text: interests
+                            type: type,
+                            text: text
                         }
                     };
                 },
