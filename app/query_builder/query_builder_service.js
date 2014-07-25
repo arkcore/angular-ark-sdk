@@ -96,7 +96,7 @@ angular.module('ArkSDK')
                     return {
                         type: "language",
                         data: {
-                            language: language
+                            languages: language
                         }
                     };
                 },
