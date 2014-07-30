@@ -94,9 +94,9 @@ angular.module('ArkSDK')
 
                 languageQuery: function (language) {
                     return {
-                        type: "language",
+                        type: "languages",
                         data: {
-                            languages: language
+                            language: language
                         }
                     };
                 },
