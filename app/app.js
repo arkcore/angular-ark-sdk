@@ -9,7 +9,6 @@ angular.module('ArkSDK.config', [])
   // list of available networks
   .constant('ArkAvailableNetworks', {
     'AngelList': 'angellist',
-    'About.me': 'aboutme',
     'Behance': 'behance',
     'Blogger': 'blogger',
     'Care2.com': 'care2',
@@ -25,7 +24,6 @@ angular.module('ArkSDK.config', [])
     'Hacker News': 'hackernews',
     'Instagram': 'instagram',
     'Keek': 'keek',
-    'Klout': 'klout',
     'Last.fm': 'lastfm',
     'LinkedIn': 'linkedin',
     'Meetup': 'meetup',
