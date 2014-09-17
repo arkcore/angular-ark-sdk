@@ -64,10 +64,12 @@ gulp.task('watch',function(){
 
 });
 
-gulp.task('connect', plugins.connect.server({
-    root: ['build'],
-    port: 9000,
-    livereload: false
-}));
+gulp.task('connect', function () {
+  plugins.connect.server({
+      root: ['build'],
+      port: 9000,
+      livereload: false
+  })
+});
 
 gulp.task('default',['connect','scripts','templates','css','copy-index','vendorJS','vendorCSS','watch']);
