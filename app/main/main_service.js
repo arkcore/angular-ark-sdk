@@ -27,6 +27,10 @@ angular.module('ArkSDK')
                     return Restangular.one("search", id).get();
                 },
 
+                getRandom: function() {
+                    return Restangular.all("random").customGET();
+                },
+
                 search: function (commands, page, config) {
                     // TODO: add mode support
                     var query = { query: commands };
