@@ -10,7 +10,7 @@ var _ArkAPIKeyPlaceholder = 'your-ark-api-key';
 
 angular.module('ArkSDK.config', [])
   // In the production mode you have to specify API key here
-  .constant('ArkAPIKey', _ArkAPIKeyPlaceholder)
+  .value('ArkAPIKey', _ArkAPIKeyPlaceholder)
   // list of available networks
   .constant('ArkAvailableNetworks', {
     'AngelList': 'angellist',
