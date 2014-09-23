@@ -23,12 +23,23 @@ angular.module('ArkSDK')
                     return this.search(query, page);
                 },
 
+                getBatch: function (requests, type, config) {
+                  var query = ArkQueryBuilder.batchQuery(requests, type);
+                  return this.batch(query, type, config);
+                },
+
                 findById: function(id) {
                     return Restangular.one("search", id).get();
                 },
 
                 getRandom: function() {
                     return Restangular.all("random").customGET();
+                },
+
+                batch: function (commands, type, config) {
+                    return Restangular.all("search/batch/" + type)
+                        .withHttpConfig(config)
+                        .post(commands);
                 },
 
                 search: function (commands, page, config) {

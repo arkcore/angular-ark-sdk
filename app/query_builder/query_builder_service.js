@@ -8,8 +8,8 @@ angular.module('ArkSDK')
         'ArkAvailableNetworks',
         function (ArkAvailableNetworks) {
 
-            var _sexValues = ["male", "female", "other"];
-            var _interestsTypes = ['books', 'film', 'games', 'movies', 'music', 'other'];
+            var _sexValues = [ 'male', 'female', 'other' ];
+            var _interestsTypes = [ 'books', 'film', 'games', 'movies', 'music', 'other' ];
             var _suggestAllowedFields = [
                 'fullName',
                 'header',
@@ -20,6 +20,7 @@ angular.module('ArkSDK')
                 'experience.title'
             ];
             var _networks = _.values(ArkAvailableNetworks);
+            var _allowedBatchRequests = [ 'email' ];
 
             var queryBuilder = {
 
@@ -219,6 +220,23 @@ angular.module('ArkSDK')
                         text: text
                     };
 
+                },
+
+                /**
+                 * [batchQuery description]
+                 * @param {Array} requests - data to query for
+                 * @param {String} type    - type of request {email}
+                 */
+                batchQuery: function (requests, type) {
+                    if (_.indexOf(_allowedBatchRequests, type) === -1) {
+                        throw new Error("Batch query supports only these types of requests: ", _allowedBatchRequests.join(','));
+                    }
+
+                    switch (type) {
+                        case 'email':
+                            // just send an array of emails
+                            return requests;
+                    }
                 }
 
             };
