@@ -3,9 +3,11 @@
 // Created by Vitaly Aminev <v@aminev.me>
 //
 
+var _ArkAPIKeyPlaceholder = 'your-ark-api-key';
+
 angular.module('ArkSDK.config', [])
   // In the production mode you have to specify API key here
-  .value('ArkAPIKey', 'your-ark-api-key')
+  .constant('ArkAPIKey', _ArkAPIKeyPlaceholder)
   // list of available networks
   .constant('ArkAvailableNetworks', {
     'AngelList': 'angellist',
@@ -62,7 +64,18 @@ angular.module('ArkSDK')
     function (Restangular, ArkAPIKey) {
       return Restangular.withConfig(function(RestangularConfigurer) {
 
-        RestangularConfigurer.setDefaultHeaders({"x-ark-token": ArkAPIKey});
+        if (_ArkAPIKeyPlaceholder !== ArkAPIKey) {
+          RestangularConfigurer.setDefaultHeaders({"x-ark-token": ArkAPIKey});
+        } else {
+          console.error('Please, specify your own API KEY');
+          // It can be done by adding this code to your module
+          // angular.module('ArkSDK.config').config(["$provide", function ($provide) {
+          //     $provide.decorator("ArkAPIKey", function () {
+          //          return "real-ark-token";
+          //     });
+          // }]);
+        }
+
         RestangularConfigurer.setBaseUrl('https://ng.ark.com/api/1');
 
         // If you need to disable caching - do it here
