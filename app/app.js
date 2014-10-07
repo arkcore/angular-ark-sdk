@@ -7,7 +7,7 @@ var _ArkAPIKeyPlaceholder = 'your-ark-api-key';
 
 angular.module('ArkSDK.config', [])
   // In the production mode you have to specify API key here
-  .value('ArkAPIKey', _ArkAPIKeyPlaceholder)
+  .value('ArkAPIKey', _globalArkAPIKey || _ArkAPIKeyPlaceholder)
   // list of available networks
   .constant('ArkAvailableNetworks', {
     'AngelList': 'angellist',
@@ -67,13 +67,16 @@ angular.module('ArkSDK')
         if (_ArkAPIKeyPlaceholder !== ArkAPIKey) {
           RestangularConfigurer.setDefaultHeaders({"x-ark-token": ArkAPIKey});
         } else {
-          console.error('Please, specify your own API KEY');
-          // It can be done by adding this code to your module
-          // angular.module('ArkSDK.config').config(["$provide", function ($provide) {
-          //     $provide.decorator("ArkAPIKey", function () {
-          //          return "real-ark-token";
-          //     });
-          // }]);
+          var warn =  'Please, specify your own API KEY\n' +
+                      'It can be done by adding this code to your module\n' +
+                      'angular.module(\'ArkSDK.config\').config(["$provide", function ($provide) {\n' +
+                      ' $provide.decorator(\'ArkAPIKey\', function () {\n' +
+                      '   return \'real-ark-token\';\n' +
+                      ' });\n' +
+                      '}]);\n' +
+                      '\n' +
+                      'Or by setting `window._globalArkAPIKey = `your-arpi-key`;';
+          console.error(warn);
         }
 
         RestangularConfigurer.setBaseUrl('https://ng.ark.com/api/1');
