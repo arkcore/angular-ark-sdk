@@ -94,7 +94,6 @@ angular.module('ArkSDK')
                 _handleError: function (data) {
                     return data;
                 }
-
             };
 
             _.bindAll(service);
