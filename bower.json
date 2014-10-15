@@ -1,7 +1,7 @@
 {
   "name": "angular-ark-sdk",
   "main": "app.js",
-  "version": "0.2.4",
+  "version": "0.2.5",
   "authors": [
     "Vitaly Aminev <vitaly@ark.com>"
   ],
@@ -16,10 +16,10 @@
   ],
   "dependencies": {
     "lodash": "~2.4.1",
-    "angular": "1.3.0-rc.4",
+    "angular": "1.3.0",
     "restangular": "~1.4.0"
   },
   "resolutions": {
-    "angular": "1.3.0-rc.4"
+    "angular": "1.3.0"
   }
 }
