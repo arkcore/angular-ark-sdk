@@ -50,7 +50,8 @@ angular.module('ArkSDK')
 
                     return Restangular.all("search")
                         .withHttpConfig(config)
-                        .post(query, { page: page });
+                        .post(query, { page: page })
+                        .then(this._extractResponse(false), this._handleError);
                 },
 
                 suggestMultiple: function (fields, text, config) {
@@ -91,9 +92,7 @@ angular.module('ArkSDK')
                 },
 
                 _handleError: function (data) {
-                    return function() {
-                        return data;
-                    };
+                    return data;
                 }
 
             };
