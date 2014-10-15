@@ -184,7 +184,13 @@ angular.module('ArkSDK')
                 },
 
                 _handleError: function (data) {
-                    return data;
+                    var err, msg;
+                    if (typeof data.data === 'object') {
+                        msg = data.data.message;
+                    }
+                    err = new Error(msg || 'Unknown Error');
+                    err.status = data.status;
+                    return $q.reject(err);
                 }
             };
 
