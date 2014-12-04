@@ -225,7 +225,15 @@ angular.module('ArkSDK')
                 'education.degree',
                 'education.school',
                 'experience.company',
-                'experience.title'
+                'experience.title',
+                'interests.books.value.tag',
+                'interests.film.value.tag',
+                'interests.games.value.tag',
+                'interests.movies.value.tag',
+                'interests.music.value.tag',
+                'interests.other.value.tag',
+                'interests.spotify.artist',
+                'interests.spotify.song'
             ];
             var _networks = _.values(ArkAvailableNetworks);
             var _allowedBatchRequests = [ 'email' ];
