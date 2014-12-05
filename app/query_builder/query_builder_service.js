@@ -53,6 +53,21 @@ angular.module('ArkSDK')
                     };
                 },
 
+                networkIdQuery: function (id) {
+                    if (!id) {
+                      throw new Error('id must be defined');
+                    }
+
+                    var query = {
+                        type: 'network_id_only',
+                        data: {
+                            id: id
+                        }
+                    };
+
+                    return query;
+                },
+
                 networkAndIdQuery: function (network, id) {
                     if (_.indexOf(_networks, network) === -1) {
                         throw new Error(network + " is not in the list of available networks");
