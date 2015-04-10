@@ -3,7 +3,11 @@
 // Created by Vitaly Aminev <v@aminev.me>
 //
 
-angular.module('ArkSDK')
+var config = require('../config.js');
+
+module.exports = angular.module('ArkSDK.queryBuilder', [
+        config.name
+    ])
     .factory('ArkQueryBuilder', [
         'ArkAvailableNetworks',
         function (ArkAvailableNetworks) {

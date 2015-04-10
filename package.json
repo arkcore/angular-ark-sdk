@@ -1,17 +1,20 @@
 {
   "name": "angular-ark-sdk",
-  "version": "0.2.9",
-  "main": "build/app.js",
+  "version": "0.3.0",
+  "main": "build/app.min.js",
+  "scripts": {
+    "build": "NODE_ENV=production gulp dist"
+  },
   "devDependencies": {
-    "gulp": "^3.8.10",
-    "gulp-angular-templatecache": "^1.4.2",
-    "gulp-concat": "^2.4.2",
+    "browserify": "^9.0.8",
+    "gulp": "^3.8.11",
+    "gulp-concat": "^2.5.2",
     "gulp-connect": "^2.2.0",
-    "gulp-jshint": "^1.9.0",
-    "gulp-load-plugins": "^0.7.1",
-    "jasmine-core": "^2.1.3",
-    "karma": "^0.12.28",
-    "karma-chrome-launcher": "^0.1.7",
-    "karma-jasmine": "^0.3.2"
+    "gulp-if": "^1.2.5",
+    "gulp-load-plugins": "^0.9.0",
+    "lodash-compat": "^3.6.0",
+    "minifyify": "^6.4.0",
+    "restangular": "^1.5.1",
+    "vinyl-source-stream": "^1.1.0"
   }
 }

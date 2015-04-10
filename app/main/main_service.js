@@ -3,7 +3,15 @@
 // Created by Vitaly Aminev <v@aminev.me>
 //
 
-angular.module('ArkSDK')
+var config = require('../config.js');
+var ArkRestangular = require('./ArkRestangular.js');
+var ArkQueryBuilder = require('./query_builder_service.js');
+
+module.exports = angular.module('ArkSDK.main', [
+        config.name,
+        ArkRestangular.name,
+        ArkQueryBuilder.name
+    ])
     .factory('ArkApi', [
         'ArkRestangular',
         '$q',
