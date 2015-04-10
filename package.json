@@ -1,6 +1,6 @@
 {
   "name": "angular-ark-sdk",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "main": "app/app.js",
   "scripts": {
     "build": "NODE_ENV=production gulp dist"
