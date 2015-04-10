@@ -1,4 +1,4 @@
-app
 bower_components
 karma-unit.js
 gulpfile.js
+build
